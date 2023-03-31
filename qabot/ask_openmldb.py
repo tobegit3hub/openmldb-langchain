@@ -9,10 +9,10 @@ from langchain.document_loaders import UnstructuredMarkdownLoader
 from langchain.chains.qa_with_sources import load_qa_with_sources_chain
 from langchain.llms import OpenAI
 
-
+    
 def load_faiss():
-    #faiss_file_path = "./openmldb_docs_index"
-    faiss_file_path = "./openmldb_pdf_index"
+    faiss_file_path = "./openmldb_docs_index"
+    #faiss_file_path = "./openmldb_pdf_index"
     embeddings = OpenAIEmbeddings()
 
     vector_store = FAISS.load_local(faiss_file_path, embeddings)
@@ -33,7 +33,9 @@ def query_docs(query):
 
     db = load_faiss()
 
-    related_docs = db.similarity_search(query)
+    #number_of_docs = 2
+    number_of_docs = 4
+    related_docs = db.similarity_search(query, k=number_of_docs)
 
     llm = OpenAI(temperature=0)
 
@@ -48,8 +50,8 @@ def query_docs(query):
 
     sources = []
     for source_string in sources_string.split(","):
-        #sources.append(file_path_to_web_url(markdown_to_html(source_string.strip())))
-        sources.append(source_string)
+        sources.append(file_path_to_web_url(markdown_to_html(source_string.strip())))
+        #sources.append(source_string)
     
     print("Reply: ", reply)
     print("Source: ", sources)

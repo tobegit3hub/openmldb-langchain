@@ -73,8 +73,8 @@ def load_pdf_to_faiss():
 
 
 def main():
-    #load_docs_to_faiss()
-    load_pdf_to_faiss()
+    load_docs_to_faiss()
+    #load_pdf_to_faiss()
 
 
 if __name__ == "__main__":
